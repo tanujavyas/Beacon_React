@@ -1,0 +1,56 @@
+/**
+ * Tax Stats Widget
+ */
+import React from "react";
+import CountUp from "react-countup";
+
+// chart
+import TinyLineChart from "../Charts/TinyLineChart";
+
+// constants
+import ChartConfig from "../../constants/chart-config";
+
+// rct card box
+import {
+  RctCard,
+  RctCardContent,
+  RctCardFooter
+} from "../../components/RctCard";
+
+const TaxStats = ({ label, chartdata, labels }) => (
+  <RctCard>
+    <div className="rct-block-title d-flex justify-content-between">
+      <div className="d-flex align-items-start">
+        <h4>Delivered Cases</h4>
+      </div>
+      <div className="align-items-end">
+        <span className="d-block text-muted counter-point">
+          <CountUp start={0} end={1200} duration={3} useEasing={true} />
+        </span>
+        <p className="text-right mb-0 text-muted">+64%</p>
+      </div>
+    </div>
+    <RctCardContent noPadding>
+      <TinyLineChart
+        label={label}
+        chartdata={chartdata}
+        labels={labels}
+        borderColor={ChartConfig.color.success}
+        pointBackgroundColor={ChartConfig.color.success}
+        height={100}
+        pointBorderColor={ChartConfig.color.white}
+        borderWidth={4}
+      />
+    </RctCardContent>
+    <RctCardFooter customClasses="d-flex justify-content-between">
+      {labels &&
+        labels.map((label, key) => (
+          <span className="fs-12 text-muted" key={key}>
+            {label}
+          </span>
+        ))}
+    </RctCardFooter>
+  </RctCard>
+);
+
+export { TaxStats };
