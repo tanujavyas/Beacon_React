@@ -36,5 +36,6 @@ module.exports = {
   "mainDashboard.enableDragging": "Enable Drag/Drop",
   "themeOptions.appSettings": "App Settings",
   "themeOptions.miniSidebar": "Mini Sidebar",
-  "themeOptions.darkMode": "Dark Mode"
+  "themeOptions.darkMode": "Dark Mode",
+  "sidebar.organisation": "Organisation"
 };
