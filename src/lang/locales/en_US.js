@@ -37,5 +37,6 @@ module.exports = {
   "themeOptions.appSettings": "App Settings",
   "themeOptions.miniSidebar": "Mini Sidebar",
   "themeOptions.darkMode": "Dark Mode",
-  "sidebar.organisation": "Organisation"
+  "sidebar.organisation": "Organisation",
+  "sidebar.organisationList": "OrganisationList"
 };

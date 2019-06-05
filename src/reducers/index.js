@@ -30,7 +30,7 @@ const appReducer = combineReducers({
   enclosureDetails: enclosureReducer,
   shippingRouteDetails: ShippingRoutesReducer,
   doctorDetails: doctorReducer,
-  organisationReducer: organisationReducer
+  organisation: organisationReducer
 });
 
 const rootReducer = (state, action) => {
