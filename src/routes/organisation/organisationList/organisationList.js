@@ -72,9 +72,7 @@ class OrganisationList extends Component {
   }
 
   onEdit(organisationObj) {
-    this.props.history.push(
-      "/app/organisation/organisationForm?id=" + organisationObj.id
-    );
+    this.props.history.push("/app/organisationForm?id=" + organisationObj.id);
     //console.log(organisationObj);
   }
 
@@ -132,11 +130,10 @@ class OrganisationList extends Component {
   }
 
   onAddOrganisation() {
-    this.props.history.push("/app/organisation/organisationForm");
+    this.props.history.push("/app/organisationForm");
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
     this.props.getOrganisationDataList();
   }
 
@@ -152,7 +149,7 @@ class OrganisationList extends Component {
           {
             <div title={"Organisation List"} className={`rct-block-title`}>
               <div className="d-flex justify-content-between">
-                <h4>User List</h4>
+                <h4>Organisation List</h4>
                 <Button
                   color="secondry"
                   className="fa fa-plus"

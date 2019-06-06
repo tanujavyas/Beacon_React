@@ -42,7 +42,6 @@ export const addUserDetails = (data, history) => dispatch => {
         type: ADD_USER_INFO_SUCCESS,
         payload: response.data
       });
-
       history.push("/app/userList");
     })
     .catch(error => {

@@ -13,8 +13,12 @@ import {
   Row
 } from "reactstrap";
 import { connect } from "react-redux";
-//import {addOrganisationDetails} from '../../../actions';
-import * as actions from "../../../actions";
+import {
+  addOrganisationDetails,
+  getOrganisationDetailsById,
+  updateOrganisationDetails
+} from "../../../actions";
+//import * as actions from "../../../actions";
 import { parse } from "query-string";
 class OrganisationForm extends Component {
   constructor() {
@@ -48,7 +52,6 @@ class OrganisationForm extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps", nextProps);
     if (
       nextProps.organisation &&
       // !this.state.isFormSubmited &&
@@ -69,8 +72,13 @@ class OrganisationForm extends Component {
   }
 
   onSubmit = () => {
-    const { Org } = { ...this.state };
-    this.props.addOrganisationDetails(Org);
+    if (!this.state.showEdit) {
+      const { Org } = { ...this.state };
+      this.props.addOrganisationDetails(Org, this.props.history);
+    } else {
+      const { Org } = { ...this.state };
+      this.props.updateOrganisationDetails(Org, this.props.history);
+    }
   };
 
   onClear = () => {
@@ -274,7 +282,29 @@ class OrganisationForm extends Component {
   }
 }
 
-const mapStateToProps = ({ state, organisation }) => {
+// const mapStateToProps = ({ state, organisation }) => {
+//   return {
+//     addingOrg: organisation.addingOrg,
+//     organisationInfoLoading: organisation.organisationInfoLoading,
+//     organisation: organisation.organisation
+//   };
+// };
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     addOrganisationDetails: data =>
+//       dispatch(actions.addOrganisationDetails(data)),
+//     getOrganisationDetailsById: id =>
+//       dispatch(actions.getOrganisationDetailsById(id))
+//   };
+// };
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(OrganisationForm);
+
+const mapStateToProps = ({ organisation }) => {
   return {
     addingOrg: organisation.addingOrg,
     organisationInfoLoading: organisation.organisationInfoLoading,
@@ -282,27 +312,11 @@ const mapStateToProps = ({ state, organisation }) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addOrganisationDetails: data =>
-      dispatch(actions.addOrganisationDetails(data)),
-    getOrganisationDetailsById: id =>
-      dispatch(actions.getOrganisationDetailsById(id))
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    addOrganisationDetails,
+    getOrganisationDetailsById,
+    updateOrganisationDetails
+  }
 )(OrganisationForm);
-
-// const mapStateToProps = ({ organisation }) => {
-//   return {
-//     loadingOrg : organisation.loadingOrg
-//   };
-// };
-
-// export default connect(
-//   mapStateToProps,
-//  {addOrganisationDetails}
-// )(OrganisationForm);

@@ -40,15 +40,8 @@ export default {
       permission: "address",
       isDisabled: false,
       chiledRoutes: null
-    },
-    {
-      menuTitle: "sidebar.organisation",
-      menuIcon: "fa fa-map-marker",
-      path: "/app/organisation",
-      permission: "organisation",
-      isDisabled: false,
-      chiledRoutes: null
     }
+
     //,
     // {
     //   menuTitle: "sidebar.maintenance",
@@ -156,6 +149,14 @@ export default {
           permission: "user"
         }
       ]
+    },
+    {
+      menuTitle: "sidebar.organisation",
+      menuIcon: "fa fa-map-marker",
+      path: "/app/organisationList",
+      permission: "organisation",
+      isDisabled: false,
+      chiledRoutes: null
     }
   ]
 };

@@ -113,8 +113,15 @@ const AsyncDoctorsListComponent = Loadable({
   loading: () => <RctPageLoader />
 });
 
-const AsyncOrganisatioComponent = Loadable({
-  loader: () => import("../../routes/organisation"),
+const AsyncOrganisationListComponent = Loadable({
+  loader: () =>
+    import("../../routes/organisation/organisationList/organisationList.js"),
+  loading: () => <RctPageLoader />
+});
+
+const AsyncOrganisationFormComponent = Loadable({
+  loader: () =>
+    import("../../routes/organisation/organisationForm/organisationForm.js"),
   loading: () => <RctPageLoader />
 });
 
@@ -139,5 +146,6 @@ export {
   AsyncEnclosuresListComponent,
   AsyncShippingRoutesListComponent,
   AsyncDoctorsListComponent,
-  AsyncOrganisatioComponent
+  AsyncOrganisationListComponent,
+  AsyncOrganisationFormComponent
 };

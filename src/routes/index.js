@@ -32,7 +32,8 @@ import {
   AsyncShippingRoutesListComponent,
   AsyncDoctorsListComponent,
   AsyncAddLabComponent,
-  AsyncOrganisatioComponent
+  AsyncOrganisationListComponent,
+  AsyncOrganisationFormComponent
 } from "../components/AsyncComponent/AsyncComponent";
 import $ from "jquery";
 import ThemeOptions from "../components/ThemeOptions/ThemeOptions";
@@ -165,8 +166,12 @@ class MainApp extends Component {
                     component={AsyncDoctorsListComponent}
                   />
                   <Route
-                    path={`${this.props.match.url}/organisation`}
-                    component={AsyncOrganisatioComponent}
+                    path={`${this.props.match.url}/organisationList`}
+                    component={AsyncOrganisationListComponent}
+                  />
+                  <Route
+                    path={`${this.props.match.url}/organisationForm`}
+                    component={AsyncOrganisationFormComponent}
                   />
                   <Route
                     path={`${this.props.match.url}/addNewLab`}

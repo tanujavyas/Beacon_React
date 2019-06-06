@@ -6,7 +6,6 @@ import AppConfig from "../constants/AppConfig";
 let appUrl = "http://114.143.177.212:3360";
 
 export const getOrganisationDataList = (data, history) => dispatch => {
-  console.log("org history", history);
   dispatch({ type: actionTypes.GET_ORGANISATIONS_LIST });
   axios
     .get(`${appUrl}/api/Organization/GetList`)
@@ -39,7 +38,33 @@ export const addOrganisationDetails = (data, history) => dispatch => {
         type: actionTypes.ADD_ORGANISATION_INFO_SUCCESS,
         payload: response.data
       });
-      history.push("/app/organisation");
+      history.push("/app/organisationList");
+    })
+    .catch(error => {
+      // handleError(error);
+      dispatch({
+        type: actionTypes.ADD_ORGANISATION_INFO_FAILURE,
+        error: error
+      });
+    });
+};
+
+export const updateOrganisationDetails = (data, history) => dispatch => {
+  console.log("data", data);
+  dispatch({ type: actionTypes.ADD_ORGANISATION_INFO, payload: data });
+  axios
+    .put(`${appUrl}/api/Organization/PutOrganization`, data, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => {
+      NotificationManager.success("Organisation Updated Successfully");
+      dispatch({
+        type: actionTypes.ADD_ORGANISATION_INFO_SUCCESS,
+        payload: response.data
+      });
+      history.push("/app/organisationList");
     })
     .catch(error => {
       // handleError(error);
