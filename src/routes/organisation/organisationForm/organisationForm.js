@@ -23,7 +23,7 @@ class OrganisationForm extends Component {
         id: 5,
         name: "",
         //  organizationCode: null,
-        businessType: "",
+        businessType: 1,
         address: "",
         email: "",
         phone: "",
