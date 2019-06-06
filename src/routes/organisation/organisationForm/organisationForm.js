@@ -15,6 +15,7 @@ import {
 import { connect } from "react-redux";
 //import {addOrganisationDetails} from '../../../actions';
 import * as actions from "../../../actions";
+import { parse } from "query-string";
 class OrganisationForm extends Component {
   constructor() {
     super();
@@ -33,8 +34,30 @@ class OrganisationForm extends Component {
         timezoneId: "",
         isActive: true,
         isDeleted: false
-      }
+      },
+      showEdit: false
     };
+  }
+
+  componentDidMount() {
+    const search = parse(this.props.location.search);
+    if (search && search.id) {
+      this.props.getOrganisationDetailsById({ id: search.id });
+      this.setState({ showEdit: true });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("nextProps", nextProps);
+    if (
+      nextProps.organisation &&
+      // !this.state.isFormSubmited &&
+      nextProps.organisationInfoLoading != this.props.organisationInfoLoading
+    ) {
+      this.setState({
+        Org: nextProps.organisation
+      });
+    }
   }
 
   onChangeInput(event) {
@@ -47,12 +70,10 @@ class OrganisationForm extends Component {
 
   onSubmit = () => {
     const { Org } = { ...this.state };
-    console.log("org", Org);
     this.props.addOrganisationDetails(Org);
   };
 
   onClear = () => {
-    console.log("onClear");
     this.setState({
       Org: {
         id: 5,
@@ -226,20 +247,23 @@ class OrganisationForm extends Component {
             </div>
             <div className="row">
               <div className="col-sm-12 col-md-12 col-xl-12">
-                <Button
-                  className="btn-danger text-white mr-10"
-                  style={{ float: "right" }}
-                  onClick={() => this.onClear()}
-                >
-                  Clear
-                </Button>
-
+                {!this.state.showEdit ? (
+                  <Button
+                    className="btn-danger text-white mr-10"
+                    style={{ float: "right" }}
+                    onClick={() => this.onClear()}
+                  >
+                    Clear
+                  </Button>
+                ) : (
+                  ""
+                )}
                 <Button
                   className="btn text-white mr-10"
                   style={{ float: "right" }}
                   onClick={() => this.onSubmit()}
                 >
-                  Save
+                  {this.state.showEdit ? "Update" : "Save"}
                 </Button>
               </div>
             </div>
@@ -252,15 +276,21 @@ class OrganisationForm extends Component {
 
 const mapStateToProps = ({ state, organisation }) => {
   return {
-    loadingOrg: organisation.loadingOrg
+    addingOrg: organisation.addingOrg,
+    organisationInfoLoading: organisation.organisationInfoLoading,
+    organisation: organisation.organisation
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return {
     addOrganisationDetails: data =>
-      dispatch(actions.addOrganisationDetails(data))
+      dispatch(actions.addOrganisationDetails(data)),
+    getOrganisationDetailsById: id =>
+      dispatch(actions.getOrganisationDetailsById(id))
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

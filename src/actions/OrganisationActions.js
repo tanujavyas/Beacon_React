@@ -1,30 +1,32 @@
-import * as actions from "../actions/types";
+import * as actionTypes from "../actions/types";
 import axios from "axios";
 import { NotificationManager } from "react-notifications";
 import AppConfig from "../constants/AppConfig";
 
 let appUrl = "http://114.143.177.212:3360";
+
 export const getOrganisationDataList = (data, history) => dispatch => {
-  dispatch({ type: actions.GET_ORGANISATIONS_LIST });
+  console.log("org history", history);
+  dispatch({ type: actionTypes.GET_ORGANISATIONS_LIST });
   axios
-    .get(`http://114.143.177.212:3360/api/Organization/GetList`)
+    .get(`${appUrl}/api/Organization/GetList`)
     .then(response => {
       dispatch({
-        type: actions.GET_ORGANISATIONS_LIST_SUCCESS,
+        type: actionTypes.GET_ORGANISATIONS_LIST_SUCCESS,
         payload: response.data
       });
     })
     .catch(error => {
       // handleError(error);
       dispatch({
-        type: actions.GET_ORGANISATIONS_LIST_FAILURE,
+        type: actionTypes.GET_ORGANISATIONS_LIST_FAILURE,
         error: error
       });
     });
 };
 
 export const addOrganisationDetails = (data, history) => dispatch => {
-  dispatch({ type: actions.ADD_ORGANISATION_INFO, payload: data });
+  dispatch({ type: actionTypes.ADD_ORGANISATION_INFO, payload: data });
   axios
     .post(`${appUrl}/api/Organization/PostOrganization`, data, {
       headers: {
@@ -34,7 +36,7 @@ export const addOrganisationDetails = (data, history) => dispatch => {
     .then(response => {
       NotificationManager.success("Organisation Added Successfully");
       dispatch({
-        type: actions.ADD_ORGANISATION_INFO_SUCCESS,
+        type: actionTypes.ADD_ORGANISATION_INFO_SUCCESS,
         payload: response.data
       });
       history.push("/app/organisation");
@@ -42,7 +44,52 @@ export const addOrganisationDetails = (data, history) => dispatch => {
     .catch(error => {
       // handleError(error);
       dispatch({
-        type: actions.ADD_ORGANISATION_INFO_FAILURE,
+        type: actionTypes.ADD_ORGANISATION_INFO_FAILURE,
+        error: error
+      });
+    });
+};
+
+export const activateDeactivateOrganisation = data => dispatch => {
+  dispatch({ type: actionTypes.DELETE_ORGANISATION });
+  axios
+    .delete(`${appUrl}/api/Organization/DeleteOrganization?id=` + data.id)
+    .then(response => {
+      // if (data.status)
+      //   NotificationManager.success("Organisation Activated Successfully");
+      // else
+      NotificationManager.success("Organisation Deactivated Successfully");
+      // dispatch({
+      //   type: actionTypes.DELETE_ORGANISATION_SUCCESS,
+      //   payload: response.data
+      // });
+      dispatch(getOrganisationDataList());
+    })
+    .catch(error => {
+      //  handleError(error);
+      dispatch({
+        type: actionTypes.DELETE_ORGANISATION_FAILURE,
+        error: error
+      });
+    });
+};
+
+export const getOrganisationDetailsById = data => dispatch => {
+  dispatch({ type: actionTypes.GET_ORGANISATION_INFO });
+  axios
+    .get(`${appUrl}/api/Organization/GetOrganization`, {
+      params: data
+    })
+    .then(response => {
+      dispatch({
+        type: actionTypes.GET_ORGANISATION_INFO_SUCCESS,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      // handleError(error);
+      dispatch({
+        type: actionTypes.GET_ORGANISATION_INFO_FAILURE,
         error: error
       });
     });

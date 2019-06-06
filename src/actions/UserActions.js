@@ -42,6 +42,7 @@ export const addUserDetails = (data, history) => dispatch => {
         type: ADD_USER_INFO_SUCCESS,
         payload: response.data
       });
+
       history.push("/app/userList");
     })
     .catch(error => {
@@ -74,7 +75,7 @@ export const getUserdetailsById = data => dispatch => {
     });
 };
 
-export const getUsersDataList = data => dispatch => {
+export const getUsersDataList = (data, history) => dispatch => {
   dispatch({ type: GET_USER_LIST });
   axios
     .get(`${AppConfig.appUrl}/api/User/getUsers`, {

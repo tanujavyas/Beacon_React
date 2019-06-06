@@ -5,7 +5,10 @@ import IntlMessages from "../../../util/IntlMessages";
 import _ from "lodash";
 import { DataGridComponent } from "../../../components/Datagrid/DataGridComponent";
 import { Button } from "reactstrap";
-import { getOrganisationDataList } from "../../../actions/index.js";
+import {
+  getOrganisationDataList,
+  activateDeactivateOrganisation
+} from "../../../actions/index.js";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -86,11 +89,11 @@ class OrganisationList extends Component {
           : null,
       status:
         this.state.organisationDataObj &&
-        this.state.organisationDataObj.active === true
+        this.state.organisationDataObj.isActive === true
           ? false
           : true
     };
-    //  this.props.activateDeactivateUser(data);
+    this.props.activateDeactivateOrganisation(data);
   }
 
   showDeleteConfimation(organisationObj) {
@@ -192,7 +195,7 @@ class OrganisationList extends Component {
           <DialogTitle id="alert-dialog-slide-title">
             {"Do you really want to"}
             {this.state.organisationDataObj &&
-            this.state.organisationDataObj.active === true
+            this.state.organisationDataObj.isActive === true
               ? " Deactivate"
               : " Activate"}
             {" it ?"}
@@ -204,7 +207,7 @@ class OrganisationList extends Component {
               onClick={this.onActivateDeactivate}
             >
               {this.state.organisationDataObj &&
-              this.state.organisationDataObj.active === true
+              this.state.organisationDataObj.isActive === true
                 ? " Deactivate"
                 : " Activate"}
             </Button>
@@ -226,6 +229,7 @@ const mapStateToProps = ({ organisation }) => {
 export default connect(
   mapStateToProps,
   {
-    getOrganisationDataList
+    getOrganisationDataList,
+    activateDeactivateOrganisation
   }
 )(OrganisationList);
