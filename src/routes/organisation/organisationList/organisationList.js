@@ -73,7 +73,6 @@ class OrganisationList extends Component {
 
   onEdit(organisationObj) {
     this.props.history.push("/app/organisationForm?id=" + organisationObj.id);
-    //console.log(organisationObj);
   }
 
   onActivateDeactivate() {

@@ -13,7 +13,12 @@ const INIT_STATE = {
   addingOrg: false,
   organisationsTotalCount: 0,
   organisation: null,
-  organisationInfoLoading: false
+  organisationInfoLoading: false,
+  countryList: [],
+  stateList: [],
+  cityList: [],
+  timeZoneList: [],
+  businessTypeList: []
 };
 
 export default (state = INIT_STATE, action) => {
@@ -98,6 +103,41 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         loadingOrganisationList: false
+      };
+    }
+
+    case actionTypes.GET_COUNTRY_LIST: {
+      return {
+        ...state,
+        countryList: action.payload
+      };
+    }
+
+    case actionTypes.GET_STATE_LIST: {
+      return {
+        ...state,
+        stateList: action.payload
+      };
+    }
+
+    case actionTypes.GET_CITY_LIST: {
+      return {
+        ...state,
+        cityList: action.payload
+      };
+    }
+
+    case actionTypes.GET_TIMEZONE_LIST: {
+      return {
+        ...state,
+        timeZoneList: action.payload
+      };
+    }
+
+    case actionTypes.GET_BUSINESS_TYPE_LIST: {
+      return {
+        ...state,
+        businessTypeList: action.payload
       };
     }
 
