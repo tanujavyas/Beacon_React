@@ -1,0 +1,18 @@
+[
+  {
+    "branchAttibutes": [],
+    "id": 3,
+    "businessType": 1,
+    "attributeType": "BranchAttribute",
+    "attributeName": "BookONURL",
+    "dataType": null
+  },
+  {
+    "branchAttibutes": [],
+    "id": 4,
+    "businessType": 1,
+    "attributeType": "BranchAttribute",
+    "attributeName": "Range",
+    "dataType": null
+  }
+]
