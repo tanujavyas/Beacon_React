@@ -72,7 +72,9 @@ class OrganisationList extends Component {
   }
 
   onEdit(organisationObj) {
-    this.props.history.push("/app/organisationForm?id=" + organisationObj.id);
+    this.props.history.push(
+      "/app/organisation/organisationForm?id=" + organisationObj.id
+    );
   }
 
   onActivateDeactivate() {
@@ -129,7 +131,7 @@ class OrganisationList extends Component {
   }
 
   onAddOrganisation() {
-    this.props.history.push("/app/organisationForm");
+    this.props.history.push("/app/organisation/organisationForm");
   }
 
   componentDidMount() {

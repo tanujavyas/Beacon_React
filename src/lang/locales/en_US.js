@@ -38,5 +38,6 @@ module.exports = {
   "themeOptions.miniSidebar": "Mini Sidebar",
   "themeOptions.darkMode": "Dark Mode",
   "sidebar.organisation": "Organisation",
-  "sidebar.organisationList": "OrganisationList"
+  "sidebar.organisationList": "OrganisationList",
+  "sidebar.laboratory": "laboratory"
 };

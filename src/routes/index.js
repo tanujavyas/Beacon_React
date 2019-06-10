@@ -32,8 +32,8 @@ import {
   AsyncShippingRoutesListComponent,
   AsyncDoctorsListComponent,
   AsyncAddLabComponent,
-  AsyncOrganisationListComponent,
-  AsyncOrganisationFormComponent
+  AsyncOrganisationComponent,
+  AsyncLaboratoryComponent
 } from "../components/AsyncComponent/AsyncComponent";
 import $ from "jquery";
 import ThemeOptions from "../components/ThemeOptions/ThemeOptions";
@@ -165,17 +165,20 @@ class MainApp extends Component {
                     path={`${this.props.match.url}/doctors`}
                     component={AsyncDoctorsListComponent}
                   />
-                  <Route
-                    path={`${this.props.match.url}/organisationList`}
-                    component={AsyncOrganisationListComponent}
-                  />
-                  <Route
-                    path={`${this.props.match.url}/organisationForm`}
-                    component={AsyncOrganisationFormComponent}
-                  />
+
                   <Route
                     path={`${this.props.match.url}/addNewLab`}
                     component={AsyncAddLabComponent}
+                  />
+
+                  <Route
+                    path={`${this.props.match.url}/organisation`}
+                    component={AsyncOrganisationComponent}
+                  />
+
+                  <Route
+                    path={`${this.props.match.url}/laboratory`}
+                    component={AsyncLaboratoryComponent}
                   />
                   <Footer
                     copyRightText={

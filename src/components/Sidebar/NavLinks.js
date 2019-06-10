@@ -153,8 +153,16 @@ export default {
     {
       menuTitle: "sidebar.organisation",
       menuIcon: "fa fa-map-marker",
-      path: "/app/organisationList",
+      path: "/app/organisation",
       permission: "organisation",
+      isDisabled: false,
+      chiledRoutes: null
+    },
+    {
+      menuTitle: "sidebar.laboratory",
+      menuIcon: "fa fa-map-marker",
+      path: "/app/laboratory",
+      permission: "laboratory",
       isDisabled: false,
       chiledRoutes: null
     }

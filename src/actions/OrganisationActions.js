@@ -39,7 +39,7 @@ export const addOrganisationDetails = (data, history) => dispatch => {
         type: actionTypes.ADD_ORGANISATION_INFO_SUCCESS,
         payload: response.data
       });
-      history.push("/app/organisationList");
+      history.push("/app/organisation");
     })
     .catch(error => {
       // handleError(error);
@@ -64,7 +64,7 @@ export const updateOrganisationDetails = (data, history) => dispatch => {
         type: actionTypes.ADD_ORGANISATION_INFO_SUCCESS,
         payload: response.data
       });
-      history.push("/app/organisationList");
+      history.push("/app/organisation");
     })
     .catch(error => {
       // handleError(error);
