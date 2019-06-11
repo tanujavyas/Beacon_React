@@ -28,7 +28,7 @@ export const getLaboratoryDataList = (data, history) => dispatch => {
 export const addLaboratoryDetails = (data, history) => dispatch => {
   dispatch({ type: actionTypes.ADD_LABORATORY_INFO, payload: data });
   axios
-    .post(`${appUrl}/api/Branch/PostOrganization`, data, {
+    .post(`${appUrl}/api/Branch/PostBranch`, data, {
       headers: {
         "Content-Type": "application/json"
       }
@@ -53,7 +53,7 @@ export const addLaboratoryDetails = (data, history) => dispatch => {
 export const updateLaboratoryDetails = (data, history) => dispatch => {
   dispatch({ type: actionTypes.ADD_LABORATORY_INFO, payload: data });
   axios
-    .put(`${appUrl}/api/Branch/PutOrganization`, data, {
+    .put(`${appUrl}/api/Branch/PutBranch`, data, {
       headers: {
         "Content-Type": "application/json"
       }

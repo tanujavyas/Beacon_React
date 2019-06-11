@@ -57,18 +57,18 @@ class LaboratoryForm extends Component {
           image: null
         },
         branchAttibutes: [
-          //   {
-          //     attributeMaster: null,
-          //     branchId: 7,
-          //     attributeId: 3,
-          //     value: "http://server/"
-          //   },
-          //   {
-          //     attributeMaster: null,
-          //     branchId: 7,
-          //     attributeId: 4,
-          //     value: 10
-          //   }
+          {
+            attributeMaster: null,
+            branchId: 7,
+            attributeId: 3,
+            value: "http://server/"
+          },
+          {
+            attributeMaster: null,
+            branchId: 7,
+            attributeId: 4,
+            value: 10
+          }
         ],
         locations: [],
         locationFloors: [],
@@ -100,7 +100,7 @@ class LaboratoryForm extends Component {
     this.props.getTimeZoneList();
     this.props.getBusinessTypeList();
     this.props.getOrganisationDataList();
-    this.getBranchAttribute();
+    // this.getBranchAttribute();
     const search = parse(this.props.location.search);
     if (search && search.id) {
       this.props.getLaboratoryDetailsById({ id: search.id });
@@ -205,6 +205,7 @@ class LaboratoryForm extends Component {
   onSubmit = () => {
     if (!this.state.showEdit) {
       const { labObject } = { ...this.state };
+      console.log("labObject", labObject);
       this.props.addLaboratoryDetails(labObject, this.props.history);
     } else {
       const { labObject } = { ...this.state };
