@@ -26,27 +26,70 @@ import {
 } from "../../../actions";
 //import * as actions from "../../../actions";
 import { parse } from "query-string";
+const attributeList = require("./branchAttribute.json");
 import DropdownSelect from "../../../components/InputElement/DropdownSelect";
 class LaboratoryForm extends Component {
   constructor() {
     super();
     this.state = {
-      Lab: {
-        id: 5,
-        name: "",
-        //  organizationCode: null,
+      showEdit: false,
+      labObject: {
+        assets: [],
+        assetTypes: [],
+        beaconAssets: [],
+        organization: "",
+        user: {
+          branches: [],
+          roles: [],
+          id: 2,
+          name: "Labadmin",
+          username: "labadmin@bludente.com",
+          passwordHash: "6d02add9ee6d2558685b4e3466f03fcf",
+          changePasswordKey: null,
+          retryCount: null,
+          lockTime: null,
+          email: "labadmin@bludente.com",
+          phone: null,
+          organizationId: null,
+          branchID: null,
+          isDeleted: false,
+          active: true,
+          image: null
+        },
+        branchAttibutes: [
+          //   {
+          //     attributeMaster: null,
+          //     branchId: 7,
+          //     attributeId: 3,
+          //     value: "http://server/"
+          //   },
+          //   {
+          //     attributeMaster: null,
+          //     branchId: 7,
+          //     attributeId: 4,
+          //     value: 10
+          //   }
+        ],
+        locations: [],
+        locationFloors: [],
+        receivers: [],
+        beacons: [],
+        id: 7,
+        name: "Dr Reddy branch 2",
+        branchCode: null,
+        organizationId: 5,
         businessType: 1,
-        address: "",
-        email: "",
-        phone: "",
-        countryid: "",
-        stateId: "",
-        cityId: "",
-        timezoneId: "",
+        address: "pune",
+        email: "reddy@g.com",
+        phone: 9689065990,
+        adminUserId: 2,
+        countryid: 1,
+        stateId: 1,
+        cityId: 1,
+        timezoneId: 1,
         isActive: true,
         isDeleted: false
-      },
-      showEdit: false
+      }
     };
   }
 
@@ -57,6 +100,7 @@ class LaboratoryForm extends Component {
     this.props.getTimeZoneList();
     this.props.getBusinessTypeList();
     this.props.getOrganisationDataList();
+    this.getBranchAttribute();
     const search = parse(this.props.location.search);
     if (search && search.id) {
       this.props.getLaboratoryDetailsById({ id: search.id });
@@ -71,81 +115,141 @@ class LaboratoryForm extends Component {
       nextProps.laboratoryInfoLoading != this.props.laboratoryInfoLoading
     ) {
       this.setState({
-        Lab: nextProps.laboratory
+        labObject: nextProps.laboratory
       });
     }
   }
 
-  onChangeInput(event) {
-    const { Lab } = { ...this.state };
-    Lab[event.target.name] = event.target.value;
+  getBranchAttribute() {
+    let branchList = [];
+    attributeList.forEach(attr => {
+      let branchObj = {
+        attributeMaster: attr.attributeName,
+        branchId: 7,
+        attributeId: attr.id,
+        value: ""
+      };
+      branchList.push(branchObj);
+    }, this);
+
+    let { labObject } = { ...this.state };
+    labObject.branchAttibutes = branchList;
+    this.setState({ labObject: labObject });
+  }
+
+  onChangeLabInput(event) {
+    const { labObject } = { ...this.state };
+    labObject[event.target.name] = event.target.value;
     this.setState({
-      Lab: Lab
+      labObject: labObject
     });
   }
 
+  onChangeAdminInput(event) {
+    let { labObject } = { ...this.state };
+    let { user } = labObject;
+    user[event.target.name] = event.target.value;
+    labObject.user = user;
+    this.setState({
+      labObject: labObject
+    });
+  }
+
+  onOrganisationSelection = value => {
+    let { labObject } = { ...this.state };
+    labObject.organizationId = value;
+    this.setState({ labObject: labObject });
+  };
+
   onCountrySelection = value => {
-    let { Lab } = { ...this.state };
-    Lab.countryid = value;
-    this.setState({ Lab: Lab });
+    let { labObject } = { ...this.state };
+    labObject.countryid = value;
+    this.setState({ labObject: labObject });
   };
 
   onStateSelection = value => {
-    let { Lab } = { ...this.state };
-    Lab.stateId = value;
-    this.setState({ Lab: Lab });
+    let { labObject } = { ...this.state };
+    labObject.stateId = value;
+    this.setState({ labObject: labObject });
   };
 
   onCitySelection = value => {
-    let { Lab } = { ...this.state };
-    Lab.cityId = value;
-    this.setState({ Lab: Lab });
+    let { labObject } = { ...this.state };
+    labObject.cityId = value;
+    this.setState({ labObject: labObject });
   };
 
   onTimezoneSelection = value => {
-    let { Lab } = { ...this.state };
-    Lab.timezoneId = value;
-    this.setState({ Lab: Lab });
+    let { labObject } = { ...this.state };
+    labObject.timezoneId = value;
+    this.setState({ labObject: labObject });
   };
 
   onBusinessTypeSelection = value => {
-    let { Lab } = { ...this.state };
-    Lab.businessType = value;
-    this.setState({ Lab: Lab });
+    let { labObject } = { ...this.state };
+    labObject.businessType = value;
+    this.setState({ labObject: labObject });
   };
 
   onSubmit = () => {
+    console.log("labObject", this.state.labObject);
     if (!this.state.showEdit) {
-      const { Lab } = { ...this.state };
-      this.props.addLaboratoryDetails(Lab, this.props.history);
+      const { labObject } = { ...this.state };
+      this.props.addLaboratoryDetails(labObject, this.props.history);
     } else {
-      const { Lab } = { ...this.state };
-      this.props.updateLaboratoryDetails(Lab, this.props.history);
+      const { labObject } = { ...this.state };
+      this.props.updateLaboratoryDetails(labObject, this.props.history);
     }
   };
 
   onClear = () => {
-    this.setState({
-      Lab: {
-        id: 5,
-        name: "",
-        //  organizationCode: null,
-        businessType: "",
-        address: "",
-        email: "",
-        phone: "",
-        countryid: "",
-        stateId: "",
-        cityId: "",
-        timezoneId: "",
-        isActive: true,
-        isDeleted: false
-      }
-    });
+    // this.setState({
+    //   Lab: {
+    //     id: 5,
+    //     name: "",
+    //     //  organizationCode: null,
+    //     businessType: "",
+    //     address: "",
+    //     email: "",
+    //     phone: "",
+    //     countryid: "",
+    //     stateId: "",
+    //     cityId: "",
+    //     timezoneId: "",
+    //     isActive: true,
+    //     isDeleted: false
+    //   }
+    // });
   };
 
+  getBranchAttributeForm() {
+    let { branchAttibutes } = { ...this.state.labObject };
+    return (
+      // <h1>hello from getBranchAttributeForm</h1>
+      branchAttibutes.map(attr => {
+        return (
+          <FormGroup>
+            <Col xs="12">
+              <Label htmlFor="Text">
+                Name <span className="text-danger">*</span>
+              </Label>
+              <Input
+                type="text"
+                name="name"
+                id="name"
+                // value={labObject.name}
+                onChange={event => this.onChangeLabInput(event)}
+              />
+            </Col>
+          </FormGroup>
+        );
+      }, this)
+    );
+  }
+
   render() {
-    let Lab = { ...this.state.Lab };
+    let { labObject } = { ...this.state };
+    let { user } = labObject;
     return (
       <div>
         {/* <PageTitleBar
@@ -159,13 +263,13 @@ class LaboratoryForm extends Component {
               <div className="col-sm-12 col-md-12 col-xl-6">
                 <FormGroup>
                   <Col xs="12">
-                    <Label>Country</Label>
+                    <Label>Organisation</Label>
                     <DropdownSelect
-                      name="Country"
-                      placeholder="Select Country"
-                      value={Lab.countryid}
-                      options={this.props.countryList}
-                      onChange={this.onCountrySelection.bind(this)}
+                      name="Organisation"
+                      placeholder="Select Organisation"
+                      value={labObject.organizationId}
+                      options={this.props.organisationDropdownList}
+                      onChange={this.onOrganisationSelection.bind(this)}
                       /* options={
                     this.state.setActiveDistricts
                       ? this.state.districtOptions
@@ -192,8 +296,8 @@ class LaboratoryForm extends Component {
                       type="text"
                       name="name"
                       id="name"
-                      value={Lab.name}
-                      onChange={event => this.onChangeInput(event)}
+                      value={labObject.name}
+                      onChange={event => this.onChangeLabInput(event)}
                     />
                   </Col>
                 </FormGroup>
@@ -203,8 +307,8 @@ class LaboratoryForm extends Component {
                     <Input
                       type="text"
                       name="address"
-                      value={Lab.address}
-                      onChange={event => this.onChangeInput(event)}
+                      value={labObject.address}
+                      onChange={event => this.onChangeLabInput(event)}
                     />
                   </Col>
                 </FormGroup>
@@ -217,8 +321,8 @@ class LaboratoryForm extends Component {
                       type="text"
                       name="email"
                       id="email"
-                      value={Lab.email}
-                      onChange={event => this.onChangeInput(event)}
+                      value={labObject.email}
+                      onChange={event => this.onChangeLabInput(event)}
                     />
                   </Col>
                 </FormGroup>
@@ -229,8 +333,8 @@ class LaboratoryForm extends Component {
                       type="text"
                       name="phone"
                       id="phone"
-                      value={Lab.phone}
-                      onChange={event => this.onChangeInput(event)}
+                      value={labObject.phone}
+                      onChange={event => this.onChangeLabInput(event)}
                     />
                   </Col>
                 </FormGroup>
@@ -242,7 +346,7 @@ class LaboratoryForm extends Component {
                     <DropdownSelect
                       name="Country"
                       placeholder="Select Country"
-                      value={Lab.countryid}
+                      value={labObject.countryid}
                       options={this.props.countryList}
                       onChange={this.onCountrySelection.bind(this)}
                       /* options={
@@ -268,7 +372,7 @@ class LaboratoryForm extends Component {
                     <DropdownSelect
                       name="state"
                       placeholder="Select State"
-                      value={Lab.stateId}
+                      value={labObject.stateId}
                       options={this.props.stateList}
                       onChange={this.onStateSelection.bind(this)}
                       /* options={
@@ -294,7 +398,7 @@ class LaboratoryForm extends Component {
                     <DropdownSelect
                       name="city"
                       placeholder="Select City"
-                      value={Lab.cityId}
+                      value={labObject.cityId}
                       options={this.props.cityList}
                       onChange={this.onCitySelection.bind(this)}
                       /* options={
@@ -320,7 +424,7 @@ class LaboratoryForm extends Component {
                     <DropdownSelect
                       name="city"
                       placeholder="Select Time Zone"
-                      value={Lab.timezoneId}
+                      value={labObject.timezoneId}
                       options={this.props.timeZoneList}
                       onChange={this.onTimezoneSelection.bind(this)}
                       /* options={
@@ -346,7 +450,7 @@ class LaboratoryForm extends Component {
                     <DropdownSelect
                       name="city"
                       placeholder="Select Business Type"
-                      value={Lab.businessType}
+                      value={labObject.businessType}
                       options={this.props.businessTypeList}
                       onChange={this.onBusinessTypeSelection.bind(this)}
                       /* options={
@@ -368,30 +472,118 @@ class LaboratoryForm extends Component {
                 </FormGroup>
               </div>
             </div>
+          </Form>
+        </RctCollapsibleCard>
+
+        <RctCollapsibleCard heading="Admin Details" collapsible>
+          <Form>
             <div className="row">
-              <div className="col-sm-12 col-md-12 col-xl-12">
-                {!this.state.showEdit ? (
-                  <Button
-                    className="btn-danger text-white mr-10"
-                    style={{ float: "right" }}
-                    onClick={() => this.onClear()}
-                  >
-                    Clear
-                  </Button>
-                ) : (
-                  ""
-                )}
-                <Button
-                  className="btn text-white mr-10"
-                  style={{ float: "right" }}
-                  onClick={() => this.onSubmit()}
-                >
-                  {this.state.showEdit ? "Update" : "Save"}
-                </Button>
+              <div className="col-sm-12 col-md-12 col-xl-6">
+                <FormGroup>
+                  <Col xs="12">
+                    <Label htmlFor="Text">Admin</Label>
+                    <Input
+                      type="text"
+                      name="name"
+                      value={user.name}
+                      onChange={event => this.onChangeAdminInput(event)}
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup>
+                  <Col xs="12">
+                    <Label htmlFor="Text">Email</Label>
+                    <Input
+                      type="text"
+                      name="email"
+                      value={user.email}
+                      onChange={event => this.onChangeAdminInput(event)}
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup>
+                  <Col xs="12">
+                    <Label htmlFor="Text">User Name</Label>
+                    <Input
+                      type="text"
+                      name="username"
+                      value={user.username}
+                      onChange={event => this.onChangeAdminInput(event)}
+                    />
+                  </Col>
+                </FormGroup>
+              </div>
+              <div className="col-sm-12 col-md-12 col-xl-6">
+                <FormGroup>
+                  <Col xs="12">
+                    <Label htmlFor="Text">Password</Label>
+                    <Input
+                      type="text"
+                      name="passwordHash"
+                      value={user.passwordHash}
+                      onChange={event => this.onChangeAdminInput(event)}
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup>
+                  <Col xs="12">
+                    <Label htmlFor="Text">Confirm Password</Label>
+                    <Input
+                      type="text"
+                      name="confirmPassword"
+                      value={labObject.confirmPassword}
+                      onChange={event => this.onChangeAdminInput(event)}
+                    />
+                  </Col>
+                </FormGroup>
               </div>
             </div>
           </Form>
         </RctCollapsibleCard>
+
+        <RctCollapsibleCard heading="Branch Master" collapsible>
+          <Form>
+            <div className="row">
+              <div className="col-sm-12 col-md-12 col-xl-6">
+                {/* <FormGroup>
+                  <Col xs="12">
+                    <Label htmlFor="Text">Admin</Label>
+                    <Input
+                      type="text"
+                      name="name"
+                      value={user.name}
+                      onChange={event => this.onChangeAdminInput(event)}
+                    />
+                  </Col>
+                </FormGroup> */}
+                {this.getBranchAttributeForm()}
+              </div>
+            </div>
+          </Form>
+        </RctCollapsibleCard>
+
+        <div className="row">
+          <div className="col-sm-12 col-md-12 col-xl-12">
+            {!this.state.showEdit ? (
+              <Button
+                className="btn-danger text-white mr-10"
+                style={{ float: "right" }}
+                onClick={() => this.onClear()}
+              >
+                Clear
+              </Button>
+            ) : (
+              ""
+            )}
+            <Button
+              className="btn text-white mr-10"
+              style={{ float: "right" }}
+              onClick={() => this.onSubmit()}
+            >
+              {this.state.showEdit ? "Update" : "Save"}
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
