@@ -13,3 +13,4 @@ export * from "./EnclosureDetailsActions";
 export * from "./ShippingRoutesActions";
 export * from "./DoctorsDetailsActions";
 export * from "./OrganisationActions";
+export * from "./LaboratoryActions";

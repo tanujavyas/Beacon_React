@@ -7,13 +7,18 @@ import _ from "lodash";
 let appUrl = "http://114.143.177.212:3360";
 
 export const getOrganisationDataList = (data, history) => dispatch => {
+  let organisationList = [];
   dispatch({ type: actionTypes.GET_ORGANISATIONS_LIST });
   axios
     .get(`${appUrl}/api/Organization/GetList`)
     .then(response => {
+      response.data.forEach(org => {
+        organisationList.push({ label: org.name, value: org.id });
+      });
       dispatch({
         type: actionTypes.GET_ORGANISATIONS_LIST_SUCCESS,
-        payload: response.data
+        payload: response.data,
+        organisationList: organisationList
       });
     })
     .catch(error => {

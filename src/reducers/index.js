@@ -15,6 +15,7 @@ import enclosureReducer from "./EnclosureDetailsReducer";
 import ShippingRoutesReducer from "./ShippingRoutesDetailsReducer";
 import doctorReducer from "./DoctorsDetailsReducer";
 import organisationReducer from "./OrganisationReducer";
+import laboratoryReducer from "./LaboratoryReducer";
 import { LOGOUT_USER } from "../actions/types";
 
 const appReducer = combineReducers({
@@ -30,7 +31,8 @@ const appReducer = combineReducers({
   enclosureDetails: enclosureReducer,
   shippingRouteDetails: ShippingRoutesReducer,
   doctorDetails: doctorReducer,
-  organisation: organisationReducer
+  organisation: organisationReducer,
+  laboratory: laboratoryReducer
 });
 
 const rootReducer = (state, action) => {

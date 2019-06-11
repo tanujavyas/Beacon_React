@@ -18,7 +18,8 @@ const INIT_STATE = {
   stateList: [],
   cityList: [],
   timeZoneList: [],
-  businessTypeList: []
+  businessTypeList: [],
+  organisationDropdownList: []
 };
 
 export default (state = INIT_STATE, action) => {
@@ -36,6 +37,7 @@ export default (state = INIT_STATE, action) => {
         ...state,
         loadingOrganisationList: false,
         organisationListData: action.payload,
+        organisationDropdownList: action.organisationList,
         organisationsTotalCount: action.payload.length
       };
 
