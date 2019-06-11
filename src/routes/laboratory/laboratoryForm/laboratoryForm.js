@@ -155,6 +155,17 @@ class LaboratoryForm extends Component {
     });
   }
 
+  onChangeAttributInput(event) {
+    let { labObject } = { ...this.state };
+    let { branchAttibutes } = labObject;
+
+    branchAttibutes.forEach(attr => {
+      if (attr.attributeMaster == event.target.name)
+        attr.value = event.target.value;
+    });
+    this.setState({ ...labObject.branchAttibutes, branchAttibutes });
+  }
+
   onOrganisationSelection = value => {
     let { labObject } = { ...this.state };
     labObject.organizationId = value;
@@ -192,7 +203,6 @@ class LaboratoryForm extends Component {
   };
 
   onSubmit = () => {
-    console.log("labObject", this.state.labObject);
     if (!this.state.showEdit) {
       const { labObject } = { ...this.state };
       this.props.addLaboratoryDetails(labObject, this.props.history);
@@ -231,14 +241,14 @@ class LaboratoryForm extends Component {
           <FormGroup>
             <Col xs="12">
               <Label htmlFor="Text">
-                Name <span className="text-danger">*</span>
+                {attr.attributeMaster} <span className="text-danger">*</span>
               </Label>
               <Input
                 type="text"
-                name="name"
-                id="name"
-                // value={labObject.name}
-                onChange={event => this.onChangeLabInput(event)}
+                name={attr.attributeMaster}
+                id={attr.attributeMaster}
+                value={attr.value}
+                onChange={event => this.onChangeAttributInput(event)}
               />
             </Col>
           </FormGroup>
@@ -541,7 +551,7 @@ class LaboratoryForm extends Component {
           </Form>
         </RctCollapsibleCard>
 
-        <RctCollapsibleCard heading="Branch Master" collapsible>
+        <RctCollapsibleCard heading="Branch Attributes" collapsible>
           <Form>
             <div className="row">
               <div className="col-sm-12 col-md-12 col-xl-6">
